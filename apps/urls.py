@@ -21,8 +21,8 @@ from django.conf.urls.static import static
 app_name = 'apps'
 
 urlpatterns = [
-    path('', home, name='home'),
+    path('', HomeTemplateView.as_view(), name='home'),
     path('project-details/<slug:slug>', ProjectDetailView.as_view(), name='project-details'),
-    path('blog', BlogListView.as_view(), name='blog'),
-    path('blog/<slug:slug>', BlogDetailView.as_view(), name='blog-details'),
+    # path('blog', BlogListView.as_view(), name='blog'),
+    # path('blog/<slug:slug>', BlogDetailView.as_view(), name='blog-details'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

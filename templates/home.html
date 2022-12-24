@@ -20,7 +20,7 @@
                                         <span class="blc">I am learning </span>
                                         <span class="cd-words-wrapper">
                                             <b>Software Engineer</b>
-                                            <b>Python Developer</b>
+                                            <b>Python Skills</b>
                                         </span>
                                     </div>
                                 </div>
@@ -52,12 +52,12 @@
                         <!-- about me -->
                         <div class="row pb-30">
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                <h3>{{ about.name }}</h3>
+                                <h3>{{ aboutuser.name }}</h3>
                                 <span class="about-location">
-                                    <i class="lnr lnr-map-marker"></i>{{ about.address }}
+                                    <i class="lnr lnr-map-marker"></i>{{ aboutuser.address }}
                                 </span>
                                 <p class="about-content">
-                                    {{ about.about_me }}
+                                    {{ aboutuser.about_me }}
                                 </p>
                                 <ul class="bout-list-summry row">
                                     <li class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
@@ -65,7 +65,7 @@
                                             <i class="lnr lnr-briefcase"></i>
                                         </div>
                                         <div class="details-info">
-                                            <h6>{{ about.num_experience }}+ Years Job</h6>
+                                            <h6>{{ aboutuser.num_experience }}+ Years Job</h6>
                                             <p>Experience</p>
                                         </div>
                                     </li>
@@ -74,7 +74,7 @@
                                             <i class="lnr lnr-layers"></i>
                                         </div>
                                         <div class="details-info">
-                                            <h6>{{ about.num_projects }}+ Projects</h6>
+                                            <h6>{{ aboutuser.num_projects }}+ Projects</h6>
                                             <p>Completed</p>
                                         </div>
                                     </li>
@@ -83,7 +83,7 @@
                                             <i class="lnr lnr-coffee-cup"></i>
                                         </div>
                                         <div class="details-info">
-                                            <h6>{{ about.num_meetings }}+ Meetings</h6>
+                                            <h6>{{ aboutuser.num_meetings }}+ Meetings</h6>
                                             <p>Successful</p>
                                         </div>
                                     </li>
@@ -92,7 +92,7 @@
 
                             <div class="col-xs-6 col-sm-12 col-md-6 col-lg-6">
                                 <div class="box-img">
-                                    <img src="#" class="img-fluid" alt="image">
+
                                 </div>
                             </div>
                         </div>
@@ -107,24 +107,24 @@
                                 </h4>
                             </div>
                             <div class="row">
-                                {% for chunk in services|chunks:2 %}
-                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
-                                        <div class="services-list">
-                                            {% for service in chunk %}
-                                                <div class="service-block">
-                                                    <div class="service-icon">
-                                                        {% image_exists service.image.url as image %}
-                                                        <i><img src="{{ image }}"/></i>
-                                                    </div>
-                                                    <div class="service-text">
-                                                        <h4>{{ service.title }}</h4>
-                                                        <p>{{ service.description }}</p>
-                                                    </div>
-                                                </div>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                {% endfor %}
+{#                                {% for chunk in services|chunks:2 %}#}
+{#                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">#}
+{#                                        <div class="services-list">#}
+{#                                            {% for service in chunk %}#}
+{#                                                <div class="service-block">#}
+{#                                                    <div class="service-icon">#}
+{#                                                        {% image_exists service.image.url as image %}#}
+{#                                                        <i><img src="{{ image }}"/></i>#}
+{#                                                    </div>#}
+{#                                                    <div class="service-text">#}
+{#                                                        <h4>{{ service.title }}</h4>#}
+{#                                                        <p>{{ service.description }}</p>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            {% endfor %}#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                {% endfor %}#}
                             </div>
                         </div>
                     </div>
@@ -356,7 +356,7 @@
                                 </div>
                             {% endfor %}
                             <div class="col-md-12 text-center">
-                                <a href="{% url 'apps:blog' %}" class="btn bt-submit">Show all blog</a>
+{#                                <a href="{% url 'apps:blog' %}" class="btn bt-submit">Show all blog</a>#}
                             </div>
                         </div>
                     </div>

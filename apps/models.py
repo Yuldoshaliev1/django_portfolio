@@ -7,6 +7,8 @@ from time import strftime
 from PIL import Image
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db import models
+from django.db.models import Model, CharField, TextField, ImageField, DateField, ForeignKey, IntegerField, CASCADE, \
+    DO_NOTHING, PROTECT
 from django.db.models.signals import post_delete
 from django.urls import reverse_lazy
 from django.utils.text import slugify
@@ -18,35 +20,57 @@ from tinymce.models import HTMLField
 from .signals import file_cleanup
 
 
-class About(models.Model):
-    key = models.CharField(max_length=50, primary_key=True)
-    value = models.TextField()
+class AboutUser(Model):
+    full_name = CharField(max_length=50)
+    birthday = DateField()
+    phone = CharField(max_length=255)
+    city = CharField(max_length=255)
+    degree = CharField(max_length=60)
+    image = ImageField(upload_to='profile/')
+
+    class Meta:
+        verbose_name = 'About'
+        verbose_name_plural = 'About me'
 
 
-class Service(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    image = models.ImageField(upload_to="services", default='default.png')
+class Education(Model):
+    user = ForeignKey(AboutUser,PROTECT)
+    school = CharField(max_length=255)
+    place = CharField(max_length=255)
+    description = TextField()
+    from_date = DateField()
+    to_date = DateField()
+
+    def __str__(self):
+        return self.school
+
+
+
+class Service(Model):
+    title = CharField(max_length=255)
+    description = TextField()
+    image = ImageField(upload_to="services", default='default.png')
 
     def __str__(self):
         return self.title
 
 
-class Experience(models.Model):
-    position = models.CharField(max_length=255)
-    company = models.CharField(max_length=255)
-    description = models.TextField()
-    image = models.ImageField(upload_to="experiences", default='default.png')
-    from_date = models.DateField()
-    to_date = models.DateField()
+class Experience(Model):
+    user = ForeignKey(AboutUser, PROTECT)
+    position = CharField(max_length=255)
+    company = CharField(max_length=255)
+    description = TextField()
+    image = ImageField(upload_to="experiences", default='default.png')
+    from_date = DateField()
+    to_date = DateField()
     current = models.BooleanField(default=False)
 
     def __str__(self):
         return "{} - {}".format(self.position, self.company)
 
 
-class ProjectCategory(models.Model):
-    title = models.CharField(max_length=100)
+class ProjectCategory(Model):
+    title = CharField(max_length=100)
 
     def __str__(self):
         return self.title
@@ -61,15 +85,14 @@ def project_directory_path(instance, filename):
     return 'projects/{0}/{1}'.format(strftime('%Y/%m/%d'), generate_file_name() + '.' + filename.split('.')[-1])
 
 
-class Project(models.Model):
-    project_category = models.ForeignKey(ProjectCategory, on_delete=models.DO_NOTHING)
-    title = models.CharField(max_length=255)
-    slug = models.CharField(max_length=255, unique=True, null=True)
-    image = models.ImageField(upload_to=project_directory_path, default="default.png")
-    link = models.CharField(max_length=255, null=True)
-    from_date = models.DateField()
-    to_date = models.DateField()
-    current = models.BooleanField(default=False)
+class Project(Model):
+    project_category = ForeignKey(ProjectCategory, on_delete=DO_NOTHING)
+    title = CharField(max_length=255)
+    slug = CharField(max_length=255, unique=True, null=True)
+    image = ImageField(upload_to=project_directory_path, default="default.png")
+    link = CharField(max_length=255, null=True)
+    from_date = DateField()
+    to_date = DateField()
     description = HTMLField()
 
     def __str__(self):
@@ -79,7 +102,7 @@ class Project(models.Model):
         if self.title:
             self.slug = slugify(self.title)
 
-        # Opening the uploaded image
+
         im = Image.open(self.image)
 
         if im.mode in ("RGBA", "P"):
@@ -104,65 +127,55 @@ class Project(models.Model):
 post_delete.connect(file_cleanup, sender=Project)
 
 
-class Skill(models.Model):
-    title = models.CharField(max_length=50)
-    rate = models.IntegerField()
+class Skill(Model):
+    title = CharField(max_length=50)
+    rate = IntegerField()
 
     def __str__(self):
         return self.title
 
 
-class Education(models.Model):
-    school = models.CharField(max_length=255)
-    field = models.CharField(max_length=255)
-    description = models.TextField()
-    from_date = models.DateField()
-    to_date = models.DateField()
-    current = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.school
 
 
-class BlogCategory(models.Model):
-    name = models.CharField(max_length=255)
-
-    class Meta:
-        verbose_name = "Blog Category"
-        verbose_name_plural = "Blog Categories"
-
-    def __str__(self):
-        return self.name
-
-
-def blog_directory_path(instance, filename):
-    return 'blog/{0}/{1}'.format(strftime('%Y/%m/%d'), generate_file_name(25) + '.' + filename.split('.')[-1])
-
-
-class Blog(models.Model):
-    title = models.CharField(max_length=255)
-    slug = models.CharField(max_length=255, unique=True)
-    category = models.ForeignKey(BlogCategory, on_delete=models.CASCADE)
-    description = HTMLField()
-    image = models.ImageField(upload_to=blog_directory_path, null=True, blank=True)
-    created_at = models.DateField(default=now)
-
-    def __str__(self):
-        return self.title
-
-    def save(self, *args, **kwargs):
-        if self.title:
-            self.slug = slugify(self.title)
-        super(Blog, self).save()
-
-    @property
-    def photo(self):
-        if self.image:
-            return self.image.url
-        else:
-            return static("images/blog_default.jpg")
-
-    def get_absolute_url(self):
-        return reverse_lazy('apps:blog-details', self.slug)
-
-
+#
+# class BlogCategory(Model):
+#     name = CharField(max_length=255)
+#
+#     class Meta:
+#         verbose_name = "Blog Category"
+#         verbose_name_plural = "Blog Categories"
+#
+#     def __str__(self):
+#         return self.name
+#
+#
+# def blog_directory_path(instance, filename):
+#     return 'blog/{0}/{1}'.format(strftime('%Y/%m/%d'), generate_file_name(25) + '.' + filename.split('.')[-1])
+#
+#
+# class Blog(Model):
+#     title = CharField(max_length=255)
+#     slug = CharField(max_length=255, unique=True)
+#     category = ForeignKey(BlogCategory, on_delete=CASCADE)
+#     description = HTMLField()
+#     image = ImageField(upload_to=blog_directory_path, null=True, blank=True)
+#     created_at = DateField(default=now)
+#
+#     def __str__(self):
+#         return self.title
+#
+#     def save(self, *args, **kwargs):
+#         if self.title:
+#             self.slug = slugify(self.title)
+#         super(Blog, self).save()
+#
+#     @property
+#     def photo(self):
+#         if self.image:
+#             return self.image.url
+#         else:
+#             return static("images/blog_default.jpg")
+#
+#     def get_absolute_url(self):
+#         return reverse_lazy('apps:blog-details', self.slug)
+#
