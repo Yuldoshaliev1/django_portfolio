@@ -124,16 +124,16 @@ USE_TZ = True
 ALLOWED_HOSTS = ['localhost', 'portfolio.akmal.com', '127.0.0.1']
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR , 'static')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR , 'staticfiles')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "apps/static"),
 ]
 
 
-MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join(BASE_DIR , "media/")
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR , "media")
 
 TINYMCE_JS_URL = 'https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'
 TINYMCE_COMPRESSOR = False
