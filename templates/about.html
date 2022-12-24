@@ -3,8 +3,8 @@
 {% block content %}
     <section id="hero" class="d-flex flex-column justify-content-center align-items-center">
         <div class="hero-container" data-aos="fade-in">
-            <h1>{{ user.first_name }} {{ user.last_name }}</h1>
-            <p>I'm <span class="typed" data-typed-items="{% for i in user.types %}{{ i }}, {% endfor %}"></span>
+            <h1>{{ aboutaboutuser.full_name }} </h1>
+            <p>I'm <span class="typed" data-typed-items="{% for i in aboutaboutuser.types %}{{ i }}, {% endfor %}"></span>
             </p>
         </div>
     </section>
@@ -27,33 +27,33 @@
                         <img src="{% static 'images/Happy_guy.jpg' %}" class="img-fluid" alt="">
                     </div>
                     <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-                        <h3>{{ user.job }}</h3>
+                        <h3>{{ aboutuser.job }}</h3>
                         <div class="row">
                             <div class="col-lg-6">
                                 <ul>
                                     <li><i class="bi bi-chevron-right"></i> <strong>Birthday:</strong>
-                                        <span>{{ user.birthday|date:"d F Y" }}</span></li>
+                                        <span>{{ aboutuser.birthday|date:"d F Y" }}</span></li>
                                     <li><i class="bi bi-chevron-right"></i> <strong>Website:</strong>
-                                        <span>{{ user.website }}</span>
+                                        <span>{{ aboutuser.website }}</span>
                                     </li>
                                     <li><i class="bi bi-chevron-right"></i> <strong>Phone:</strong>
-                                        <span>{{ user.phone }}</span></li>
+                                        <span>{{ aboutuser.phone }}</span></li>
                                     <li><i class="bi bi-chevron-right"></i> <strong>City:</strong>
-                                        <span>{{ user.city }}</span></li>
+                                        <span>{{ aboutuser.city }}</span></li>
                                 </ul>
                             </div>
                             <div class="col-lg-6">
                                 <ul>
                                     <li><i class="bi bi-chevron-right"></i> <strong>Age:</strong>
-                                        <span>{{ user.age }}</span></li>
+                                        <span>{{ aboutuser.age }}</span></li>
                                     <li><i class="bi bi-chevron-right"></i> <strong>Degree:</strong>
-                                        <span>{{ user.degree }}</span>
+                                        <span>{{ aboutuser.degree }}</span>
                                     </li>
                                     <li><i class="bi bi-chevron-right"></i> <strong>Email:</strong>
-                                        <span>{{ user.email }}</span>
+                                        <span>{{ aboutuser.email }}</span>
                                     </li>
                                     <li><i class="bi bi-chevron-right"></i> <strong>Freelance:</strong>
-                                        <span>{% if user.freelance %}Available{% else %}Not Available{% endif %}</span>
+                                        <span>{% if aboutuser.freelance %}Available{% else %}Not Available{% endif %}</span>
                                     </li>
                                 </ul>
                             </div>
@@ -175,7 +175,7 @@
         {#                        <div class="resume-item pb-0">#}
         {#                            <h4>Alex Smith</h4>#}
         {#                            <p><em>Innovative and deadline-driven Graphic Designer with 3+ years of experience designing#}
-        {#                                and developing user-centered digital/print marketing material from initial concept to#}
+        {#                                and developing aboutuser-centered digital/print marketing material from initial concept to#}
         {#                                final, polished deliverable.</em></p>#}
         {#                            <ul>#}
         {#                                <li>Portland par 127,Orlando, FL</li>#}
@@ -453,19 +453,19 @@
                             <div class="address">
                                 <i class="bi bi-geo-alt"></i>
                                 <h4>Location:</h4>
-                                <p>{{ user.city }}</p>
+                                <p>{{ aboutuser.city }}</p>
                             </div>
 
                             <div class="email">
                                 <i class="bi bi-envelope"></i>
                                 <h4>Email:</h4>
-                                <p>{{ user.email }}</p>
+                                <p>{{ aboutuser.email }}</p>
                             </div>
 
                             <div class="phone">
                                 <i class="bi bi-phone"></i>
                                 <h4>Call:</h4>
-                                <p>{{ user.phone }}</p>
+                                <p>{{ aboutuser.phone }}</p>
                             </div>
 
                             <iframe src="https://maps.app.goo.gl/5foXFpjN129vPMjx8"

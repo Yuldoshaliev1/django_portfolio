@@ -30,7 +30,7 @@ class HomeTemplateView(TemplateView):
         context['projects'] = Project.objects.all()
         context['skills'] = Skill.objects.all()
         context['services'] = Service.objects.all()
-        context['experiences'] = Experience.objects.all()
+        #context['experiences'] = Experience.objects.all()
         #context['services'] = Service.objects.all(),
         return context
 
