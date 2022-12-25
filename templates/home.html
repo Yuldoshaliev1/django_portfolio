@@ -19,15 +19,15 @@
                                     <div class="cd-headline clip">
                                         <span class="blc">I am learning </span>
                                         <span class="cd-words-wrapper">
-                                            <b>Software Engineer</b>
+                                            <b>Django and Database</b>
                                             <b>Python Skills</b>
                                         </span>
                                     </div>
                                 </div>
                                 <div class="home-buttons">
-                                    <a href="#contact" class="bt-submit">
-                                        <i class="lnr lnr-envelope"></i> Contact Me
-                                    </a>
+{#                                    <a href="#contact" class="bt-submit">#}
+{#                                        <i class="lnr lnr-envelope"></i> #}
+{#                                    </a>#}
                                     {#                                    <a href="#contact" class="bt-submit">#}
                                     {#                                        <i class="lnr lnr-briefcase"></i> #}
                                     {#                                    </a>#}
@@ -51,7 +51,7 @@
                     <div class="section-content">
                         <div class="row">
                             <div class="col-lg-4" data-aos="fade-right">
-                                <img src="{% static 'images/Happy_guy.jpg' %}" class="img-fluid" alt="">
+                                <img src="{% static 'images/9db2e04eb42b427f4968ab41009443b906e4eabf-people_men-min.jpg' %}" class="img-fluid" alt="">
                             </div>
                             <!-- about me -->
                             <div class="row pb-30">
@@ -137,10 +137,10 @@
                                 </h4>
                             </div>
                             <div class="row">
-                                {% for chunk in services|chunks:2 %}
+                                {% for part in services|parts:2 %}
                                     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                         <div class="services-list">
-                                            {% for service in chunk %}
+                                            {% for service in part %}
                                                 <div class="service-block">
                                                     <div class="service-icon">
                                                         {% image_exists service.image.url as image %}
