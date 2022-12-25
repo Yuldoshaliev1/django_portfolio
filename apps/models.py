@@ -1,23 +1,12 @@
-import string
 import sys
 from io import BytesIO
-from random import choice
-from time import strftime
-
 from PIL import Image
-from django.contrib.postgres.fields import ArrayField
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.db import models
 from django.db.models import Model, CharField, TextField, ImageField, DateField, ForeignKey, IntegerField, CASCADE, \
     DO_NOTHING, PROTECT
 from django.db.models.signals import post_delete
-from django.urls import reverse_lazy
 from django.utils.text import slugify
-from django.utils.timezone import now
-from django.templatetags.static import static
-
 from tinymce.models import HTMLField
-
 from .signals import file_cleanup
 
 
@@ -39,7 +28,18 @@ class AboutUser(Model):
         verbose_name_plural = 'About me'
 
 
+class Education(Model):
+    user = ForeignKey(AboutUser,PROTECT)
+    school = CharField(max_length=255)
+    college = CharField(max_length=50)
+    field = CharField(max_length=255)
+    description = TextField()
+    from_date = DateField()
+    to_date = DateField()
+    current = CharField(max_length=60)
 
+    def __str__(self):
+        return self.school
 
 
 
@@ -52,18 +52,6 @@ class Service(Model):
         return self.title
 
 
-# class Experience(Model):
-#     user = ForeignKey(AboutUser, PROTECT)
-#     position = CharField(max_length=255)
-#     company = CharField(max_length=255)
-#     description = TextField()
-#     image = ImageField(upload_to="experiences", default='default.png')
-#     from_date = DateField()
-#     to_date = DateField()
-#     current = models.BooleanField(default=False)
-#
-#     def __str__(self):
-#         return "{} - {}".format(self.position, self.company)
 
 
 class ProjectCategory(Model):
@@ -72,15 +60,7 @@ class ProjectCategory(Model):
     def __str__(self):
         return self.title
 
-#
-# def generate_file_name(length=30):
-#     letters = string.ascii_letters + string.digits
-#     return ''.join(choice(letters) for _ in range(length))
-#
-#
-# def project_directory_path(instance, filename):
-#     return 'projects/{0}/{1}'.format(strftime('%Y/%m/%d'), generate_file_name() + '.' + filename.split('.')[-1])
-#
+
 
 class Project(Model):
     project_category = ForeignKey(ProjectCategory, on_delete=DO_NOTHING)

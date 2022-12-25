@@ -4,6 +4,7 @@ from .models import *
 admin.site.register(ProjectCategory)
 admin.site.register(Skill)
 #admin.site.register(Experience)
+admin.site.register(Education)
 
 # admin.site.register(BlogCategory)
 admin.site.register(Service)
