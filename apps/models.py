@@ -2,7 +2,7 @@ from django.db.models import Model, CharField, TextField, ImageField, DateField,
     DO_NOTHING, PROTECT
 
 from django.utils.text import slugify
-from tinymce.models import HTMLField
+
 
 
 
@@ -66,7 +66,7 @@ class Project(Model):
     link = CharField(max_length=255, null=True)
     from_date = DateField()
     to_date = DateField()
-    description = HTMLField()
+
 
     def save(self, *args, **kwargs):
         if not self.slug:
